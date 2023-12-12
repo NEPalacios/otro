@@ -1,1 +1,28 @@
-editar
+editar{% extends 'AppCoder/padre.html' %}
+
+{% block content %}
+
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-success">{{message}}</div>
+{% endfor %}
+{% endif %}
+
+<h2 class="text-center">EDITAR</h2>
+
+<form class="w-50 shadow mx-auto p-4 m-3" method="post" action={% url 'productos:guardar' %}>
+
+    {% csrf_token %}
+    Nombre: <input type="text" name="nombre" class="form-control" required  {{producto.nombre}}>
+    <br>
+    Precio: <input type="number" name="precio" class="form-control" required {{producto.precio }}>
+    <br>
+    Descripcion:
+    <textarea class="form-control my-2" name="descripcion">{{producto.descripcion}}
+
+    </textarea>
+    <br>
+
+    <input type="submit" value="Actualizar" class="btn btn-primary">Actualizar
+</form>
+{% endblock content %}

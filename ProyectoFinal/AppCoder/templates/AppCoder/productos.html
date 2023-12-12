@@ -19,44 +19,42 @@
     <br>
     Descripcion:
     <textarea class="form-control my-2" name="descripcion">
-
     </textarea>
     <br>
-
     <input type="submit" value="Guardar" class="btn btn-primary">
 </form>
 
+    
 
 
+    <table class="table table-info w-75 mx-auto text-center">
+        <tr class="table-dark">
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Descripcion</th>
+            <th colspan="2"></th>
+        </tr>
 
-<table class="table table-info w-75 mx-auto text-center">
-    <tr class="table-dark">
-        <th>Nombre</th>
-        <th>Precio</th>
-        <th>Descripcion</th>
-        <th></th>
-    </tr>
-
-    {% for producto in productos %}
-    <tr>
-        <td>{{ producto.nombre }}</td>
-        <td>{{ producto.precio }}</td>
-        <td>{{ producto.descripcion }}</td>
-        <td>
-            <form action="{% url 'productos:eliminar'  producto_id %}" method="post">
-                {% csrf_token %}
-                <button class="btn btn-danger" onclick="return confirm ('Eliminar el producto seleccionado?')">Eliminar
-                </button>
-            </form>
-        </td>
-    </tr>
-    <td>
-        <form action="{% url 'productos:detalle' producto_id %}" method="post">
-            {% csrf_token %}
-            <button class="btn btn-warning" onclick="return confirm ('Editar el producto seleccionado?')">Editar
-            </button>
-        </form>
-    </td>
-    {% endfor %}
-</table>
+        {% for producto in productos %}
+        <tr>
+            <td>{{ producto.nombre }}</td>
+            <td>{{ producto.precio }}</td>
+            <td>{{ producto.descripcion }}</td>
+            <td>
+                <form action="{% url 'productos:eliminar'  producto_id %}" method="post">
+                    {% csrf_token %}
+                    <button class="btn btn-danger" onclick="return confirm ('Eliminar el producto seleccionado?')">Eliminar
+                    </button>
+                </form>
+            </td>
+        </tr>
+            <td>
+                <form action="{% url 'productos:detalle' producto_id %}" method="get">
+                    {% csrf_token %}
+                    <button class="btn btn-warning" onclick="return confirm ('Editar el producto seleccionado?')">Editar
+                    </button>
+                </form>
+            </td>
+        {% endfor %}
+    </table>
 {% endblock content %}
