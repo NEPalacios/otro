@@ -1,14 +1,26 @@
 {% extends 'AppCoder/padre.html' %}
+
 {% block content %}
 
-<h2 class="text-center">estas en: Ver Producto</h2>
-<form class="w-50 shadow mx-auto p-4 m-3" method="post" action="productos/guardar">
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-success">{{message}}</div>
+{% endfor %}
+{% endif %}
+
+<h2 class="text-center">PRODUCTOS</h2>
+
+<form class="w-50 shadow mx-auto p-4 m-3" method="post" action={% url 'productos:guardar' %}>
+
     {% csrf_token %}
     Nombre: <input type="text" name="nombre" class="form-control" required>
     <br>
     Precio: <input type="number" name="precio" class="form-control" required>
     <br>
-    Descripcion: <textarea  name="descripcion" class="form-control"></textarea>
+    Descripcion:
+    <textarea class="form-control my-2" name="descripcion">
+
+    </textarea>
     <br>
 
     <input type="submit" value="Guardar" class="btn btn-primary">
@@ -24,12 +36,27 @@
         <th>Descripcion</th>
         <th></th>
     </tr>
+
     {% for producto in productos %}
     <tr>
-        <td>{{producto.nombre}}</td>
-        <td>{{producto.precio}}</td>
-        <td>{{producto.descripcion}}</td>
-    </tr> 
+        <td>{{ producto.nombre }}</td>
+        <td>{{ producto.precio }}</td>
+        <td>{{ producto.descripcion }}</td>
+        <td>
+            <form action="{% url 'productos:eliminar'  producto_id %}" method="post">
+                {% csrf_token %}
+                <button class="btn btn-danger" onclick="return confirm ('Eliminar el producto seleccionado?')">Eliminar
+                </button>
+            </form>
+        </td>
+    </tr>
+    <td>
+        <form action="{% url 'productos:detalle' producto_id %}" method="post">
+            {% csrf_token %}
+            <button class="btn btn-warning" onclick="return confirm ('Editar el producto seleccionado?')">Editar
+            </button>
+        </form>
+    </td>
     {% endfor %}
 </table>
 {% endblock content %}
